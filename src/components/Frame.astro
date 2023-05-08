@@ -1,0 +1,43 @@
+---
+
+---
+<section data-essential-class-widget="data-essential-class-widget">
+    <div  class="card border-primary mb-3"
+        x-data="{ frame: {} }" x-init="frame = (await(await fetch('http://localhost:3000/api/v1/essential/widget/frame-widget/frame?aposMode=draft&apikey=apos-esse&eas_name=:THING', {method: 'GET'})).json()).frame">
+        <span x-text="(frame.type).substring(26)"></span>
+        <span  class="fs-4 fw-bolder card-title text-center"  x-text="frame.eas_name"></span>
+        <div class="btn-group" role="group" aria-label="Basic outlined example">
+            <button   class="btn btn-danger"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#collapseClassType"
+                aria-expanded="false"
+                aria-controls="collapseClassType"
+                style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;"
+            >
+                <i class="bi-hand-index"></i>
+            </button>
+            <template
+                x-data="{defs :[{key: '_eas_type', label: 'Type', suffix: 'Type'}, {key: '_eas_supertypes', label: 'SuperType', suffix: 'SuperTypes'}]}"
+                x-for="def in defs"
+                :key="def.key"
+            >
+                <button
+                    class="btn btn-outline-danger"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    :data-bs-target="'#collapseClass' + def.suffix"
+                    aria-expanded="false"
+                    :aria-controls="'collapseClass' + def.suffix"
+                    style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;"
+                    x-text="def.label"></button>
+            </template>
+        </div>
+        <span x-text="frame.eas_name"></span>
+        <ul>
+            <template x-for="(key,index) in Object.keys(frame)" :key="index">
+                <li x-text="key"></li>
+            </template>
+        </ul>
+    </div>
+</section>
